@@ -10,8 +10,9 @@ echo -e "# blacklist IO Board Sensors\nblacklist ioboard_bh1780\nblacklist ioboa
 sed -i -e 's/console=tty1/console=tty1 consoleblank=0/g' /media/boot/boot.ini
 # Setup CPU Throttling
 wget https://raw.githubusercontent.com/mad-ady/odroid-cpu-control/master/odroid-cpu-control && chmod +x odroid-cpu-control
-#sudo chmod a-x /etc/init.d/ondemand # Disables default CPU Governor
 ./odroid-cpu-control -s -g "powersave" -m 200m -M 1.4G
 # Persistent CPU Throttling
-sed -i '13i\\n./usr/bin/odroid-cpu-control -s -g powersave -m 200 -M 1.4G' /etc/rc.local
+sed -i '13i\\n./usr/bin/odroid-cpu-control -s -g powersave -m 200m -M 1.4G' /etc/rc.local
 mv odroid-cpu-control /usr/bin/odroid-cpu-control
+# Setup CloudShell LCD Information Display
+git clone https://github.com/digital-dev/cloudshell_lcd && ./cloudshell_lcd/build_deb.sh
