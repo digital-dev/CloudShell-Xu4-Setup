@@ -1,7 +1,22 @@
 #!/bin/bash
 # Initial Setup
-apt update && apt upgrade && apt install samba samba-common checkinstall rpm curl gawk bc sysstat vim git software-properties-common build-essential -y
-
+apt update
+required=(samba samba-common checkinstall rpm curl gawk bc sysstat vim git software-properties-common build-essential)
+findmissing() {
+        for i in "$@"; do
+        checkinstalled=$(apt-cache policy "$i" | grep Installed | awk '{print $2}' | tr -d "()") > /dev/null
+        if [ "${checkinstalled}" = "none" ]; then
+        echo "$i " >> ./missing.deps
+        fi
+        done
+}
+getmissing() {
+        missing=$(cat missing.deps)
+        apt install ${missing[@]}
+}
+echo -e "Finding and installing missing dependencies.\n"
+findmissing "${required[@]}" && getmissing
+rm ./missing.deps
 # Setup LCD Screen
 echo -e '\033[9;0]' > /dev/tty1
 echo -e 'spi_s3c64xx\nspidev\nfbtft_device' >> /etc/modules
