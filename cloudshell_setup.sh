@@ -1,7 +1,7 @@
 #!/bin/bash
 # Initial Setup
 apt update
-required=(samba samba-common checkinstall rpm curl gawk bc sysstat vim git software-properties-common build-essential)
+required=(git)
 findmissing() {
         for i in "$@"; do
         checkinstalled=$(apt-cache policy "$i" | grep Installed | awk '{print $2}' | tr -d "()") > /dev/null
