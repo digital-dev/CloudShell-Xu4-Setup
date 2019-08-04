@@ -30,4 +30,4 @@ wget https://raw.githubusercontent.com/mad-ady/odroid-cpu-control/master/odroid-
 sed -i '13i\\n./usr/bin/odroid-cpu-control -s -g powersave -m 200m -M 1.4G' /etc/rc.local
 mv odroid-cpu-control /usr/bin/odroid-cpu-control
 # Setup CloudShell LCD Information Display
-git clone https://github.com/digital-dev/cloudshell_lcd && ./cloudshell_lcd/build_deb.sh
+git clone https://github.com/digital-dev/cloudshell_lcd && chmod +x ./cloudshell_lcd/*.sh && ./cloudshell_lcd/build_deb.sh
